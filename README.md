@@ -1,22 +1,20 @@
 # reinforcement-learning
-reinforcement learning
 
 ## Debugging inference algorithms
 
 ### The Optimization Verification test
 
-Suppose you are building a speech recognition system. Your system works by inputting an audio clip A , and computing some Score​<sub>A</sub>(S) for each possible output sentence ​S. For example, you might try to estimate Score​<sub>A</sub>(S) = P(​S|A), the probability that the correct output transcription is the sentence ​S, given that the input audio was ​A.
+Suppose you are building a speech recognition system. Your system works by inputting an audio clip A, and computing some Score​<sub>A</sub>(S) for each possible output sentence ​S. For example, you might try to estimate Score​<sub>A</sub>(S) = P(​S|A), the probability that the correct output transcription is the sentence ​S, given that the input audio was ​A.
 
 Given a way to compute Score​<sub>A</sub>(S), you still have to find the English sentence ​S that maximizes it:
 
 - Output = argmax<sub>S</sub> Score​<sub>A</sub>(S)
 
-How do you compute the “argmax” above? If the English language has 50,000 words, then there are (50,000)​<sup>N</sup> possible sentences of length ​N — far too many to exhaustively enumerate. So, you need to apply an approximate search algorithm, to try to find the value of ​S that optimizes (maximizes) Score​<sub>A</sub>(S). One example search algorithm is “beam search”, which keeps only K top candidates during the search process. (For the purposes of here, you don’t need to understand the details of beam search.) Algorithms like this are not guaranteed to find the value of ​S that maximizes Score​<sub>A</sub>(S).
+How do you compute the “argmax” above? If the English language has 50,000 words, then there are (50,000)​<sup>N</sup> possible sentences of length ​N — far too many to exhaustively enumerate. So, you need to apply an approximate search algorithm, to try to find the value of ​S that optimizes (maximizes) Score​<sub>A</sub>(S). One example search algorithm is **beam search**, which keeps only K top candidates during the search process. (For the purposes of here, you don’t need to understand the details of beam search.) Algorithms like this are not guaranteed to find the value of ​S that maximizes Score​<sub>A</sub>(S).
 
 Suppose that an audio clip ​A records someone saying “I love machine learning.” But instead of outputting the correct transcription, your system outputs the incorrect “I love robots.” There are now two possibilities for what went wrong:
 
-- **Search algorithm problem​.** The approximate search algorithm (beam search) failed
-to find the value of ​S that maximizes Score​<sub>A</sub>(S).
+- **Search algorithm problem​.** The approximate search algorithm (beam search) failed to find the value of ​S that maximizes Score​<sub>A</sub>(S).
 - **Objective (scoring function) problem.**​ Our estimates for Score​<sub>A</sub>(S) = P(​S|​A) were inaccurate. In particular, our choice of Score​<sub>A</sub>(S) failed to recognize that “I love machine learning” is the correct transcription.
 
 Depending on which of these was the cause of the failure, you should prioritize your efforts very differently. If #1 was the problem, you should work on improving the search algorithm. If #2 was the problem, you should work on the learning algorithm that estimates Score​<sub>A</sub>(S).
